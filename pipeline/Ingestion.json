@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "AzureToLake",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -138,7 +138,7 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Copy data1",
+						"activity": "AzureToLake",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -150,6 +150,41 @@
 						"value": "@greater(activity('Copy data1').output.dataRead,0)",
 						"type": "Expression"
 					},
+					"ifFalseActivities": [
+						{
+							"name": "DeleteEmptyFiles",
+							"type": "Delete",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "Parquet_dynamic",
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "bronze",
+										"folder": {
+											"value": "@pipeline().parameters.table",
+											"type": "Expression"
+										},
+										"file": "@concat(pipeline().parameters.table,'_',variables('current'))"
+									}
+								},
+								"enableLogging": true,
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							}
+						}
+					],
 					"ifTrueActivities": [
 						{
 							"name": "update_last_cdc",
