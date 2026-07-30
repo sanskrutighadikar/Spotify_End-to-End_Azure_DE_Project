@@ -309,6 +309,12 @@
 				}
 			}
 		],
+		"parameters": {
+			"input_loop": {
+				"type": "array",
+				"defaultValue": "[     {         \"schema\" : \"dbo\"         \"table\" : \"user_table\"         \"cdc_col\" : \"updated_at\"         \"from_date\" : \"\"     },     {         \"schema\" : \"dbo\"         \"table\" : \"artist_table\"         \"cdc_col\" : \"updated_at\"         \"from_date\" : \"\"     },     {         \"schema\" : \"dbo\"         \"table\" : \"track_table\"         \"cdc_col\" : \"updated_at\"         \"from_date\" : \"\"     },     {         \"schema\" : \"dbo\"         \"table\" : \"date_table\"         \"cdc_col\" : \"updated_at\"         \"from_date\" : \"\"     },     {         \"schema\" : \"dbo\"         \"table\" : \"stream_table\"         \"cdc_col\" : \"updated_at\"         \"from_date\" : \"\"     } ]"
+			}
+		},
 		"annotations": []
 	}
 }
