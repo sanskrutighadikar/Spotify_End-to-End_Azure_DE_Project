@@ -134,11 +134,22 @@
 				}
 			},
 			{
-				"name": "If Condition1",
+				"name": "IfIncrementalData",
 				"type": "IfCondition",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
+					"expression": {
+						"value": "@greater(activity('Copy data1').output.dataRead,0)",
+						"type": "Expression"
+					},
 					"ifTrueActivities": [
 						{
 							"name": "update_last_cdc",
